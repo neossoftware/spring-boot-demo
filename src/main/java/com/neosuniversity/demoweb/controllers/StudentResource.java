@@ -1,11 +1,12 @@
 package com.neosuniversity.demoweb.controllers;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.neosuniversity.demoweb.business.StudentIBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +23,14 @@ import com.neosuniversity.demoweb.jpa.StudentRepository;
 
 @RestController
 public class StudentResource {
-	
 
-	
 	@Autowired
 	private StudentRepository studentRepository;
-	
-	
+
+	@Autowired
+	@Qualifier("studenBusiness")
+	private StudentIBusiness studentIBusiness;
+
 	@GetMapping("/helloworld")
 	public String saludo() {
 		return "Hola MUNDO Spring Boot";
@@ -39,45 +41,20 @@ public class StudentResource {
 		
 		return student;
 	}
-	
-	
-	@GetMapping("/allStudents")
-	public List<Student> getAll() {
-	
-		List<Student> list = new ArrayList<Student>();
-		
-		Student a = new Student(new Long(12),"Mario", "232332");
-		Student b = new Student(new Long(234),"Jorge", "433");
-		Student c = new Student(new Long(2323 ),"Laura", "4334");
-		
-		list.add(a);
-		list.add(b);
-		list.add(c);
-		
-		return list;
-		
-	}
-	
-	
 
 	@GetMapping("/students")
 	public List<Student> retrieveAllStudents() {
-		return studentRepository.findAll();
+        return studentIBusiness.findAllStudents();
 	}
 
 	@GetMapping("/students/{id}")
 	public Student retrieveStudent(@PathVariable long id) {
-		Optional<Student> student = studentRepository.findById(id);
-
-		if (!student.isPresent())
-			throw new StudentNotFoundException("id-" + id);
-
-		return student.get();
+		return studentIBusiness.findStudentById(id);
 	}
 
 	@DeleteMapping("/students/{id}")
 	public void deleteStudent(@PathVariable long id) {
-		studentRepository.deleteById(id);
+        studentIBusiness.deleteStudentById(id);
 	}
 
 	@PostMapping("/students")
