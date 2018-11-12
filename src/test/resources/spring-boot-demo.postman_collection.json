@@ -1,0 +1,95 @@
+{
+	"variables": [],
+	"info": {
+		"name": "spring-boot-demo",
+		"_postman_id": "9e17c270-48c6-cbd5-42e7-f5ecb9946f49",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/healthcheck/students",
+			"request": {
+				"url": "http://localhost:8080/healthcheck/students",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "http://localhost:8080/healthcheck/students"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/students/1",
+			"request": {
+				"url": "http://localhost:8080/students/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\n        \"name\": \"Hector\",\n        \"passportNumber\": \"E1234567\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/studentss",
+			"request": {
+				"url": "http://localhost:8080/students",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n        \"name\": \"Veronica\",\n        \"passportNumber\": \"E1234789\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/students/1",
+			"request": {
+				"url": "http://localhost:8080/students/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/students/1s",
+			"request": {
+				"url": "http://localhost:8080/students/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/students",
+			"request": {
+				"url": "http://localhost:8080/students",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -9,15 +9,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service("studenBusiness")
-public class StudenBusiness implements StudentIBusiness{
+/**
+ * Business Operations <br>
+ * for student
+ */
+@Service("studentBusiness")
+public class StudentBusiness implements StudentIBusiness {
 
     @Autowired
     private StudentRepository studentRepository;
 
     @Override
     public List<Student> findAllStudents() {
-        return studentRepository.findAll();
+        return studentRepository.findAllByOrderByIdAsc();
     }
 
     @Override
@@ -33,5 +37,21 @@ public class StudenBusiness implements StudentIBusiness{
     @Override
     public void deleteStudentById(long id) {
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public Student saveStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    @Override
+    public Student updateStudent(Student student, long id) {
+        Optional<Student> studentOptional = studentRepository.findById(id);
+        Student studentResponse = null;
+        if (!studentOptional.isPresent()) {
+            return studentResponse = new Student();
+        }
+        student.setId(id);
+        return studentRepository.save(student);
     }
 }
