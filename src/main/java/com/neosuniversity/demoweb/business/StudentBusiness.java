@@ -28,9 +28,9 @@ public class StudentBusiness implements StudentIBusiness {
     public Student findStudentById(long id) {
         Optional<Student> student = studentRepository.findById(id);
 
-        if (!student.isPresent())
-            throw new StudentNotFoundException("id-" + id);
-
+        if (!student.isPresent()){
+            throw new StudentNotFoundException("Does not exit student id = " + id);
+        }
         return student.get();
     }
 
