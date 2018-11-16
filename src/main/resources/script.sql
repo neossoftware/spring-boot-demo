@@ -13,3 +13,12 @@ values(2,'Hugo', 'E1234567');
 select * from student
 
 SHOW VARIABLES LIKE "%version%";
+
+INSERT INTO libros (
+    nombrelibro,
+     autor,
+     editorial
+        )
+values ('C++', 'CARBALLIDO' , 'MC');
+
+

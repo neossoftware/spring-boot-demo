@@ -1,7 +1,7 @@
 package com.neosuniversity.demoweb.business;
 
 import com.neosuniversity.demoweb.domain.Student;
-import com.neosuniversity.demoweb.domain.StudentNotFoundException;
+import com.neosuniversity.demoweb.exceptions.StudentNotFoundException;
 import com.neosuniversity.demoweb.jpa.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
