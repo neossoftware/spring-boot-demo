@@ -22,6 +22,11 @@ public class Student {
 		this.name = name;
 		this.passportNumber = passportNumber;
 	}
+	public Student(String name, String passportNumber) {
+		super();
+		this.name = name;
+		this.passportNumber = passportNumber;
+	}
 	public Long getId() {
 		return id;
 	}

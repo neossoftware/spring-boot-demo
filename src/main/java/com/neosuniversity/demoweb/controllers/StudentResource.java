@@ -22,6 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.neosuniversity.demoweb.domain.Student;
 import com.neosuniversity.demoweb.jpa.StudentRepository;
 
+import javax.validation.Valid;
+
 /**
  * ALL Rest Service Operations <br>
  * for student
@@ -29,9 +31,6 @@ import com.neosuniversity.demoweb.jpa.StudentRepository;
 @RestController
 public class StudentResource {
     Logger logger = LoggerFactory.getLogger(StudentResource.class);
-    
-	@Autowired
-	private StudentRepository studentRepository;
 
 	@Autowired
 	@Qualifier("studentBusiness")
@@ -49,19 +48,19 @@ public class StudentResource {
 	}
 
 	@GetMapping("/students/{id}")
-	public Student retrieveStudent(@PathVariable long id) {
+	public Student retrieveStudent(@PathVariable("id") long id) {
         logger.debug(":::searching student id= {} :::",id);
 		return studentIBusiness.findStudentById(id);
 	}
 
 	@DeleteMapping("/students/{id}")
-	public void deleteStudent(@PathVariable long id) {
+	public void deleteStudent(@PathVariable("id") long id) {
         logger.debug(":::Deleting student id= {} :::",id);
         studentIBusiness.deleteStudentById(id);
 	}
 
 	@PostMapping("/students")
-	public ResponseEntity<Object> createStudent(@RequestBody Student student) {
+	public ResponseEntity<Object> createStudent( @Valid @RequestBody(required = false) Student student) {
         logger.debug(":::creating student :::");
         Student savedStudent = studentIBusiness.saveStudent(student);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -70,7 +69,7 @@ public class StudentResource {
 	}
 	
 	@PutMapping("/students/{id}")
-	public ResponseEntity<Object> updateStudent(@RequestBody Student student, @PathVariable long id) {
+	public ResponseEntity<Object> updateStudent(@Valid @RequestBody(required = false) Student student, @PathVariable("id") long id) {
         logger.debug(":::updating student id= {} :::",id);
         Optional<Student> studentOptional = Optional.ofNullable(studentIBusiness.updateStudent(student,id));
 

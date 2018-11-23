@@ -29,15 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-
-@SpringBootTest
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class StudentResourceIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
-
 
     @Autowired
     private WebApplicationContext wac;
