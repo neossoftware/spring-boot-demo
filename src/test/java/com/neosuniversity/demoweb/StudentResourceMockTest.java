@@ -4,6 +4,7 @@ import com.neosuniversity.demoweb.controllers.StudentResource;
 import com.neosuniversity.demoweb.domain.Student;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class StudentResourceMockTest {
 
     @MockBean
     private StudentResource studentResource;
+
 
     @Test
     public void testSearchAllStudentsMock() throws Exception {

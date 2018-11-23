@@ -13,7 +13,8 @@ import java.util.Optional;
  * Business Operations <br>
  * for student
  */
-@Service("studentBusiness")
+//@Service("studentBusiness")
+@Service
 public class StudentBusiness implements StudentIBusiness {
 
     @Autowired

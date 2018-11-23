@@ -33,8 +33,8 @@ public class StudentResource {
     Logger logger = LoggerFactory.getLogger(StudentResource.class);
 
 	@Autowired
-	@Qualifier("studentBusiness")
-	private StudentIBusiness studentIBusiness;
+	//@Qualifier("studentBusiness")
+	private StudentIBusiness studentBusiness;
 
 	@GetMapping("/healthcheck/students")
 	public String healthcheck() {
@@ -44,34 +44,36 @@ public class StudentResource {
 	@GetMapping("/students")
 	public List<Student> retrieveAllStudents() {
         logger.debug(":::searching all students:::");
-        return studentIBusiness.findAllStudents();
+        return studentBusiness.findAllStudents();
 	}
 
 	@GetMapping("/students/{id}")
 	public Student retrieveStudent(@PathVariable("id") long id) {
         logger.debug(":::searching student id= {} :::",id);
-		return studentIBusiness.findStudentById(id);
+        Student retorno = studentBusiness.findStudentById(id);
+		return retorno;
 	}
 
 	@DeleteMapping("/students/{id}")
 	public void deleteStudent(@PathVariable("id") long id) {
         logger.debug(":::Deleting student id= {} :::",id);
-        studentIBusiness.deleteStudentById(id);
+		studentBusiness.deleteStudentById(id);
 	}
 
 	@PostMapping("/students")
-	public ResponseEntity<Object> createStudent( @Valid @RequestBody(required = false) Student student) {
+	public ResponseEntity<Object> createStudent(@Valid @RequestBody(required = false) Student student) {
         logger.debug(":::creating student :::");
-        Student savedStudent = studentIBusiness.saveStudent(student);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedStudent.getId()).toUri();
+        Student retorno = studentBusiness.saveStudent(student);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(1).toUri();
+		//URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedStudent.getId()).toUri();
+		//URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(studentBusiness.saveStudent(student).getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping("/students/{id}")
 	public ResponseEntity<Object> updateStudent(@Valid @RequestBody(required = false) Student student, @PathVariable("id") long id) {
         logger.debug(":::updating student id= {} :::",id);
-        Optional<Student> studentOptional = Optional.ofNullable(studentIBusiness.updateStudent(student,id));
+        Optional<Student> studentOptional = Optional.ofNullable(studentBusiness.updateStudent(student,id));
 
         if (!studentOptional.isPresent()) {
             return ResponseEntity.notFound().build();
