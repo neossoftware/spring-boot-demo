@@ -63,10 +63,8 @@ public class StudentResource {
 	@PostMapping("/students")
 	public ResponseEntity<Object> createStudent(@Valid @RequestBody(required = false) Student student) {
         logger.debug(":::creating student :::");
-        Student retorno = studentBusiness.saveStudent(student);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(1).toUri();
-		//URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedStudent.getId()).toUri();
-		//URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(studentBusiness.saveStudent(student).getId()).toUri();
+        Student savedStudent = studentBusiness.saveStudent(student);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedStudent.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 	

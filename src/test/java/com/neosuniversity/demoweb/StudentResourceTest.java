@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -51,31 +52,6 @@ public class StudentResourceTest {
 
     @MockBean
     private StudentIBusiness studentIBusiness;
-
-    @Mock
-    private Student studentMockito;
-
-    private static HttpUrlStreamHandler httpUrlStreamHandler;
-
-    @MockBean
-    private MockHttpServletRequest request;
-
-
-    @BeforeClass
-    public static void setupURLStreamHandlerFactory() {
-        // Allows for mocking URL connections
-        URLStreamHandlerFactory urlStreamHandlerFactory = mock(URLStreamHandlerFactory.class);
-        URL.setURLStreamHandlerFactory(urlStreamHandlerFactory);
-
-        httpUrlStreamHandler = new HttpUrlStreamHandler();
-        given(urlStreamHandlerFactory.createURLStreamHandler("http")).willReturn(httpUrlStreamHandler);
-    }
-
-
-    @Before
-    public void reset() {
-        httpUrlStreamHandler.resetConnections();
-    }
 
     @Test
     public void testSearchAllStudents() throws Exception {
@@ -108,28 +84,10 @@ public class StudentResourceTest {
     @Test //hay que agregar las siguientes anotaciones en el RestController @Valid @RequestBody(required = false)
     public void testCreateNewStudentMock() throws Exception {
         Student studentR = new Student(6L,"Veronica","E1234789");
-        //ResponseEntity<Object> responseEntity=new ResponseEntity<>(HttpStatus.CREATED);
+        given(studentIBusiness.saveStudent(any(Student.class))).willReturn(studentR);
 
-        //StudentIBusiness busniess =mock(StudentIBusiness.class);
-        //URI location = mock(URI.class);
-       // URI uri = URI.create("https://www.google.com/");
-        given(studentIBusiness.saveStudent(studentMockito)).willReturn(studentR);
-        String href = "http://some.host.com/bad-image-reference.gif";
-
-        URLConnection urlConnection = mock(URLConnection.class);
-        httpUrlStreamHandler.addConnection(new URL(href), urlConnection);
-
-        IOException fileNotFoundException = new FileNotFoundException(href);
-        given(urlConnection.getInputStream()).willThrow(fileNotFoundException);
-
-        when(ServletUriComponentsBuilder.fromRequest(request).build().toUriString()).thenReturn(href);
-       // when(location).thenReturn(uri);
-
-              //  URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedStudent.getId()).toUri();
-        System.out.println("PASO LO ANTERIO::::");
         mockMvc.perform(post("/students")
                 .contentType(MediaType.APPLICATION_JSON)
-                //.accept(MediaType.APPLICATION_JSON).content("  { \"name\": \" hector\",\"passportNumber\": \"E1234147\"}")
                 .accept(MediaType.APPLICATION_JSON).content(asJsonString(studentR))
         )
                 .andDo(print())
