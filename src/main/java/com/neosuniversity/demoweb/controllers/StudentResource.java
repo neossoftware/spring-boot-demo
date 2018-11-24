@@ -33,7 +33,7 @@ public class StudentResource {
     Logger logger = LoggerFactory.getLogger(StudentResource.class);
 
 	@Autowired
-	//@Qualifier("studentBusiness")
+	@Qualifier("studentBusiness")
 	private StudentIBusiness studentBusiness;
 
 	@GetMapping("/healthcheck/students")

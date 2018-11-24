@@ -51,6 +51,7 @@ public class StudentResourceTest {
     private MockMvc mockMvc;
 
     @MockBean
+    @Qualifier("studentBusiness")
     private StudentIBusiness studentIBusiness;
 
     @Test
