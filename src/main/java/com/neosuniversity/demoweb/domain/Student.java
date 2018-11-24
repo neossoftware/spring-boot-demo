@@ -1,5 +1,7 @@
 package com.neosuniversity.demoweb.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 public class Student {
 	@Id
 	@GeneratedValue
+	@ApiModelProperty(notes = "The database generated product ID")
 	private Long id;
 	private String name;
 	private String passportNumber;

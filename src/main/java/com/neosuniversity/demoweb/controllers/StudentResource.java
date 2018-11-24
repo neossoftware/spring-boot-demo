@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.neosuniversity.demoweb.business.StudentIBusiness;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import javax.validation.Valid;
  * for student
  */
 @RestController
+@Api(value="students resources", description="Operations for students")
 public class StudentResource {
     Logger logger = LoggerFactory.getLogger(StudentResource.class);
 
@@ -47,6 +50,7 @@ public class StudentResource {
         return studentBusiness.findAllStudents();
 	}
 
+    @ApiOperation(value = "get students by Id")
 	@GetMapping("/students/{id}")
 	public Student retrieveStudent(@PathVariable("id") long id) {
         logger.debug(":::searching student id= {} :::",id);
