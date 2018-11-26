@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neosuniversity.demoweb.business.StudentIBusiness;
 import com.neosuniversity.demoweb.controllers.StudentResource;
 import com.neosuniversity.demoweb.domain.Student;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,28 +14,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLStreamHandlerFactory;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,9 +48,10 @@ public class StudentResourceTest {
     public void testSearchAllStudents() throws Exception {
         Student student = new Student(1L,"Janeth","E1234789");
         List<Student> lstStudents = new ArrayList<Student>();
-        lstStudents.add(student);
+        List<Student> lstStudentsSpy = Mockito.spy(lstStudents);
+        lstStudentsSpy.add(student);
 
-        given(studentIBusiness.findAllStudents()).willReturn(lstStudents);
+        given(studentIBusiness.findAllStudents()).willReturn(lstStudentsSpy);
 
         mockMvc.perform(get("/students")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -93,6 +84,29 @@ public class StudentResourceTest {
         )
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+    @Test
+    public void testUpdateStudentMock() throws Exception {
+        Student student = new Student(1L,"Veronica","E1234789");
+
+        when(studentIBusiness.updateStudent(any(Student.class),anyLong())).thenReturn(student);
+
+        mockMvc.perform(put("/students/{id}",student.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON).content(asJsonString(student))
+        )
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+    @Test
+    public void testDeleteStudentMock() throws Exception {
+        doNothing().when(studentIBusiness).deleteStudentById(anyLong());
+
+        mockMvc.perform(delete("/students/{id}", anyLong())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(studentIBusiness, times(1)).deleteStudentById(anyLong());
     }
 
     public static String asJsonString(final Object obj) {
