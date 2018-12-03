@@ -3,7 +3,9 @@ buildscript {
         springBootVersion = '2.1.1.RELEASE'
     }
     repositories {
-        mavenCentral()
+        jcenter()
+        //mavenLocal()
+        //mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -15,11 +17,15 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+
+
+configurations {
+    jaxDoclet
+}
 //mainClassName = 'com.something.MyMainClass'
 task myJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
 }
-
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -37,4 +43,5 @@ dependencies {
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     runtimeOnly('mysql:mysql-connector-java:5.1.47')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+
 }
