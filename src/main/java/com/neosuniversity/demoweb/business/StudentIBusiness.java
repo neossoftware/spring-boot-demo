@@ -11,7 +11,7 @@ import java.util.List;
 public interface StudentIBusiness {
     /**
      * find All students on Data Base
-     * @return List<Student>
+     * @return List of Studentes
      */
     List<Student> findAllStudents();
 
