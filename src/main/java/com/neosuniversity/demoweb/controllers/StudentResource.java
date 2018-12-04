@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.neosuniversity.demoweb.domain.Student;
-import com.neosuniversity.demoweb.jpa.StudentRepository;
 
 /**
  * ALL Rest Service Operations <br>
@@ -29,9 +28,6 @@ import com.neosuniversity.demoweb.jpa.StudentRepository;
 @RestController
 public class StudentResource {
     Logger logger = LoggerFactory.getLogger(StudentResource.class);
-    
-	@Autowired
-	private StudentRepository studentRepository;
 
 	@Autowired
 	@Qualifier("studentBusiness")
