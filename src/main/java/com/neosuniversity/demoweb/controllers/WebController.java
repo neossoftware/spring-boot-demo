@@ -14,6 +14,6 @@ public class WebController {
     @GetMapping("/admin")
     public String getAdmin(){
 
-        return "index";
+        return "admin";
     }
 }
