@@ -22,11 +22,17 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/form/login")
-                .loginProcessingUrl("/login")
-                .failureUrl("/form/login?error")
-               // .and()
+                   .loginProcessingUrl("/login")
+                   .failureUrl("/form/login?error")
+                .defaultSuccessUrl("/h2-console",true)
+                .and()
+                .logout().logoutUrl("/salir")
+                .logoutSuccessUrl("/form/login?logout")
+               // .and()C?
                 //.httpBasic()
                 .and().csrf().disable();//la consola de h2 necesita deshabilitar csrf
+
+
 
         http.headers().frameOptions().disable();
     }

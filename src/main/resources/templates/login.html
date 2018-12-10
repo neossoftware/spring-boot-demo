@@ -9,7 +9,11 @@
 <form th:action="@{/login}" method="post">
 
     <div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION]!=null}">
-        <span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"> Credenciales invalidas</span>
+        <span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}">Credenciales invalidas</span>
+    </div>
+    <div th:if="${param.logout !=null}" >
+        Has salido del sistema!!!
+
     </div>
 
     <label for="username">Username</label>:
