@@ -12,14 +12,20 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-               // .anyRequest().authenticated()
-                .antMatchers("/").hasRole("USER")
+                .antMatchers("/form/login").permitAll()
+                .antMatchers("/login").permitAll()
+                //.antMatchers("/").hasRole("USER")
+                .antMatchers("/").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/h2-console/**").hasAnyRole("USER","ADMIN")
+                .and().exceptionHandling().accessDeniedPage("/errors/403")
                 .and()
                 .formLogin()
-                .and()
-                .httpBasic()
+                .loginPage("/form/login")
+                .loginProcessingUrl("/login")
+                .failureUrl("/form/login?error")
+               // .and()
+                //.httpBasic()
                 .and().csrf().disable();//la consola de h2 necesita deshabilitar csrf
 
         http.headers().frameOptions().disable();

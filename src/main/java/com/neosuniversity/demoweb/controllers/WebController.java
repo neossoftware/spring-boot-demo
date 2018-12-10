@@ -8,12 +8,21 @@ public class WebController {
 
     @GetMapping("/")
     public String getRoot(){
-
         return "index";
     }
     @GetMapping("/admin")
     public String getAdmin(){
-
         return "admin";
     }
+
+    @GetMapping("/form/login")
+    public String formLogin(){
+        return "login";
+    }
+
+    @GetMapping("/errors/403")
+    public String forbiden(){
+        return "403";
+    }
+
 }
