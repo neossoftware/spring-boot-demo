@@ -17,25 +17,13 @@ import com.neosuniversity.demoweb.domain.Student;
 @RestController
 public class StudentResource {
 
-	private RestTemplate restTemplate;
-
-	public StudentResource(RestTemplateBuilder restTemplateBuilder) {
-		this.restTemplate = restTemplateBuilder.build();
-	}
 
 	@GetMapping("/")
 	public String saludo() {
 		return "Hola MUNDO Spring Boot";
 	}
 
-	@GetMapping("/book/{isbn}")
-	public String saludo(@PathVariable("isbn") String isbn) {
 
-		return this.restTemplate.exchange("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn,
-				HttpMethod.GET,
-				null,
-				String.class).getBody();
-	}
 
 	@PostMapping("/addStudent")
 	public Student addStudent(@RequestBody Student student) {
