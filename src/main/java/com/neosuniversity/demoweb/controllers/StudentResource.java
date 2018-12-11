@@ -28,6 +28,7 @@ public class StudentResource {
 		return "Hola MUNDO Spring Boot";
 	}
 
+	//http://localhost:8080/book/1449374646
 	@GetMapping("/book/{isbn}")
 	public String saludo(@PathVariable("isbn") String isbn) {
 
