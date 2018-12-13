@@ -6,28 +6,32 @@ STEPS :shipit:
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
-*       <dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Finchley.SR2</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	    </dependencyManagement>
 
 2. On the DemoWebApplication class add the next Annotation:
-* @EnableCircuitBreaker
+* @EnableHystrixDashboard
 
 3. On the class GoogleServicesImpl add the next Annotation and add new Method reliable(String isbn) .......
-*   @HystrixCommand(fallbackMethod = "reliable")
-	public String getDataBookGoogleCloud(String isbn) ......
+*           @HystrixCommand(fallbackMethod = "reliable", commandProperties = {
+			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
+			@HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60") })
+	        public String getDataBookGoogleCloud(String isbn) ......
 
     public String reliable(String isbn) .......
 
-4. Execute in a browser : http://localhost:8080/book/1449374646
+4. modify application.properties add netx configuration:
+*   management.endpoint.shutdown.enabled=true
+    management.endpoint.health.show-details=always
+    management.endpoints.web.exposure.include=*
 
-![Image of payara5](https://github.com/neossoftware/spring-boot-demo/blob/spring-boot-circuitbreaker/src/main/resources/images/circuitbreaker.JPG)
+5. Execute  in a browser : http://localhost:8080/hystrix
+![Image of payara5]()
+
+6. Configure parameters on the dashboard: URL --> http://localhost:8080/actuator/hystrix.stream  and Title --> MyHistrix -->Click monitor Streams button
+
+![Image of payara5]()
+
+7. Execute many times  in a browser : http://localhost:8080/book/1449374646
+
+8. Return to browser dashboard of hystrix
+
 
