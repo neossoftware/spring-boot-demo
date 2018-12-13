@@ -3,24 +3,22 @@ package com.neosuniversity.demoweb.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
+import com.neosuniversity.demoweb.business.GoogleServices;
 import com.neosuniversity.demoweb.domain.Student;
 
 @RestController
 public class StudentResource {
 
-	private RestTemplate restTemplate;
+	private GoogleServices googleServices;
 
-	public StudentResource(RestTemplateBuilder restTemplateBuilder) {
-		this.restTemplate = restTemplateBuilder.build();
+	public StudentResource(GoogleServices googleServices) {
+		this.googleServices = googleServices;
 	}
 
 	@GetMapping("/")
@@ -28,14 +26,11 @@ public class StudentResource {
 		return "Hola MUNDO Spring Boot";
 	}
 
-	//http://localhost:8080/book/1449374646
+	// http://localhost:8080/book/1449374646
 	@GetMapping("/book/{isbn}")
 	public String saludo(@PathVariable("isbn") String isbn) {
 
-		return this.restTemplate.exchange("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn,
-				HttpMethod.GET,
-				null,
-				String.class).getBody();
+		return googleServices.getDataBookGoogleCloud(isbn);
 	}
 
 	@PostMapping("/addStudent")
