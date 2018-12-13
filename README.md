@@ -24,14 +24,12 @@ STEPS :shipit:
     management.endpoints.web.exposure.include=*
 
 5. Execute  in a browser : http://localhost:8080/hystrix
-![Image of payara5]()
+![Image of dashboard](https://github.com/neossoftware/spring-boot-demo/blob/spring-boot-dashboardhystrix/src/main/resources/images/login_dashboard.JPG)
 
 6. Configure parameters on the dashboard: URL --> http://localhost:8080/actuator/hystrix.stream  and Title --> MyHistrix -->Click monitor Streams button
-
-![Image of payara5]()
 
 7. Execute many times  in a browser : http://localhost:8080/book/1449374646
 
 8. Return to browser dashboard of hystrix
 
-
+![Image of dashboard-hystrix](https://github.com/neossoftware/spring-boot-demo/blob/spring-boot-dashboardhystrix/src/main/resources/images/dashboard.JPG)
